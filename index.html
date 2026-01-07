@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudiantes - Apache Derby</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #eaeaea;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Lista de Estudiantes</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Fecha de nacimiento</th>
+        </tr>
+    </thead>
+    <tbody id="tabla-estudiantes">
+        <!-- Datos desde Derby -->
+    </tbody>
+</table>
+
+<script>
+fetch("http://localhost:8080/ProyectoDerby/estudiantes")
+    .then(response => response.json())
+    .then(data => {
+        let tbody = document.getElementById("tabla-estudiantes");
+        data.forEach(e => {
+            let fila = `
+                <tr>
+                    <td>${e.id}</td>
+                    <td>${e.nombre}</td>
+                    <td>${e.fechaNacimiento}</td>
+                </tr>
+            `;
+            tbody.innerHTML += fila;
+        });
+    })
+    .catch(error => console.error("Error:", error));
+</script>
+
+</body>
+</html>
